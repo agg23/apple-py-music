@@ -27,6 +27,15 @@ API_VERSION = 'v1'
 TIMEOUT_SECONDS = 30
 
 
+# Track types
+# The possible values are songs, music-videos, library-songs, or library-music-videos.
+# https://developer.apple.com/documentation/applemusicapi/libraryplaylistrequesttrack
+TRACK_TYPE_SONGS = 'songs'
+TRACK_TYPE_MUSIC_VIDEOS = 'music-videos'
+TRACK_TYPE_LIBRARY_SONGS = 'library-songs'
+TRACK_TYPE_LIBRARY_MUSIC_VIDEOS = 'library-music-videos'
+
+
 class AppleMusicClient(object):
 
     # Client-specific JSON Web Token
