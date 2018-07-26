@@ -1,7 +1,7 @@
 
 from setuptools import setup
 
-import applymusicpy
+import applemusicpy
 
 
 setup(
@@ -14,5 +14,5 @@ setup(
     # TODO:
     # test_suite="tests",
     url='https://github.com/rcrdclub/apple-music-py',
-    version=applymusicpy.VERSION,
+    version=applemusicpy.VERSION,
 )
