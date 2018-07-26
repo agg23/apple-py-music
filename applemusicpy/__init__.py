@@ -283,7 +283,7 @@ class AppleMusicClient(object):
         if tracks:
             # https://developer.apple.com/documentation/applemusicapi/libraryplaylistcreationrequest/relationships
             # https://developer.apple.com/documentation/applemusicapi/libraryplaylistrequesttrack
-            payload['relationships']['tracks'] = tracks
+            payload['relationships'] = {'tracks': tracks}
         if include:
             params['include'] = include
         return self._make_request(
