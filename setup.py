@@ -6,7 +6,7 @@ import applymusicpy
 
 setup(
     description="Apple Music Python Client",
-    install_requires=['PyJWT', 'requests'],
+    install_requires=['cryptography', 'PyJWT', 'requests'],
     keywords="apple music api wrapper",
     license="MIT",
     name="apple-music-py",
