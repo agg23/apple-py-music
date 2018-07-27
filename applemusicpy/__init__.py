@@ -267,42 +267,31 @@ class AppleMusicClient(object):
             params=params,
         )
 
-    def user_playlist_create(self, name, description=None, tracks=None,
+    def user_playlist_create(self, name, description=None, track_ids=None,
                              include=None):
         """
         Params:
             `name` <str>
             `description` <str>
-            `tracks` <list(
-                # https://developer.apple.com/documentation/applemusicapi/libraryplaylistrequesttrack
-                <dict{
-                    'id': <str> (Required) The unique identifier for the track.
-                        This ID can be a catalog identifier or a library
-                        identifier, depending on the track type.
-                    'type': <str> (Required) The type of the track to be added.
-                        The possible values are songs, music-videos,
-                        library-songs, or library-music-videos.
-                }>,
-                ...
-            )>
+            `track_ids` <list(<str>, ...)>
             # TODO: Example(s) of `include`?
             `include` <str> Additional relationships to include in the fetch.
 
         https://developer.apple.com/documentation/applemusicapi/create_a_new_library_playlist
         """
-        params = {}
-        payload = {}
+        params = None
         # https://developer.apple.com/documentation/applemusicapi/libraryplaylistcreationrequest
         # https://developer.apple.com/documentation/applemusicapi/libraryplaylistcreationrequest/attributes
-        payload['attributes'] = {'name': name}
+        payload = {'attributes': {'name': name}}
         if description:
             payload['attributes']['description'] = description
-        if tracks:
+        if track_ids:
             # https://developer.apple.com/documentation/applemusicapi/libraryplaylistcreationrequest/relationships
             # https://developer.apple.com/documentation/applemusicapi/libraryplaylistrequesttrack
+            tracks = self._build_tracks(track_ids)
             payload['relationships'] = {'tracks': tracks}
         if include:
-            params['include'] = include
+            params = {'include': include}
         return self._make_request(
             method='POST',
             endpoint='/me/library/playlists',
