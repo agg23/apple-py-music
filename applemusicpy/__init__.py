@@ -7,8 +7,10 @@ Unofficial python wrapper for Apple Music API, not endorsed by Apple in any way
 
 Subject to (frequent!) Apple Music API/documentation changes
 
-Resources:
 https://developer.apple.com/documentation/applemusicapi
+
+Apple Music API Objects:
+https://developer.apple.com/documentation/applemusicapi/apple_music_api_objects
 
 HTTP Status Codes:
 https://developer.apple.com/documentation/applemusicapi/http_status_codes
