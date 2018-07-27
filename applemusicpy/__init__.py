@@ -279,6 +279,9 @@ class AppleMusicClient(object):
             `include` <str> Additional relationships to include in the fetch.
 
         https://developer.apple.com/documentation/applemusicapi/create_a_new_library_playlist
+
+        Note: As of now (2018-07-27), adding tracks in this request fails with
+        a 400 error. YMMV.
         """
         params = None
         # https://developer.apple.com/documentation/applemusicapi/libraryplaylistcreationrequest
@@ -314,13 +317,13 @@ class AppleMusicClient(object):
             payload=payload,
         )
 
-    def user_playlist_delete(self, id):
-        """https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/DeleteLibraryPlaylist.html#//apple_ref/doc/uid/TP40017625-CH244-SW1
-        """
-        return self._make_request(
-            method='DELETE',
-            endpoint="/me/library/playlists/%s" % id,
-        )
+    # As of 2018-07-27 this endpoint is no longer documented and attempts to
+    # reach it return a `403`
+    # def user_playlist_delete(self, id):
+    #     return self._make_request(
+    #         method='DELETE',
+    #         endpoint="/me/library/playlists/%s" % id,
+    #     )
 
     def user_playlist_add_tracks(self, id, track_ids):
         """https://developer.apple.com/documentation/applemusicapi/add_tracks_to_library_playlist
@@ -333,22 +336,16 @@ class AppleMusicClient(object):
             payload=payload,
         )
 
-    def user_playlist_replace_tracks(self, id, track_ids):
-        """https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/ReplaceTracklistforLibraryPlaylist.html#//apple_ref/doc/uid/TP40017625-CH250-SW1
-        """
-        payload = {
-            'data': []
-        }
-        for track_id in track_ids:
-            payload['data'].append({
-                'id': str(track_id),
-                'type': 'songs',
-            })
-        return self._make_request(
-            method='PUT',
-            endpoint="/me/library/playlists/%s/tracks" % id,
-            payload=payload,
-        )
+    # As of 2018-07-27 this endpoint is no longer documented and attempts to
+    # reach it return a `403`
+    # def user_playlist_replace_tracks(self, id, track_ids):
+    #     tracks = self._build_tracks(track_ids)
+    #     payload = {'data': tracks}
+    #     return self._make_request(
+    #         method='PUT',
+    #         endpoint="/me/library/playlists/%s/tracks" % id,
+    #         payload=payload,
+    #     )
 
     def user_playlist_remove_tracks(self, id, track_ids):
         """https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/DeleteTrackfromLibraryPlaylist.html#//apple_ref/doc/uid/TP40017625-CH251-SW1
