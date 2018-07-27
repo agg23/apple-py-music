@@ -12,5 +12,5 @@ setup(
     # TODO:
     # test_suite="tests",
     url='https://github.com/rcrdclub/apple-music-py',
-    version='0.2.1',
+    version='0.3.0',
 )
