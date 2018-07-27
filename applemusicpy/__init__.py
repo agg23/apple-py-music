@@ -323,16 +323,10 @@ class AppleMusicClient(object):
         )
 
     def user_playlist_add_tracks(self, id, track_ids):
-        """https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/AddTracktoLibraryPlaylist.html#//apple_ref/doc/uid/TP40017625-CH249-SW1
+        """https://developer.apple.com/documentation/applemusicapi/add_tracks_to_library_playlist
         """
-        payload = {
-            'data': []
-        }
-        for track_id in track_ids:
-            payload['data'].append({
-                'id': str(track_id),
-                'type': 'songs',
-            })
+        tracks = self._build_tracks(track_ids)
+        payload = {'data': tracks}
         return self._make_request(
             method='POST',
             endpoint="/me/library/playlists/%s/tracks" % id,
