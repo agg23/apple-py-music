@@ -165,7 +165,8 @@ class AppleMusicClient(object):
 
     """API Endpoints"""
 
-    def search(self, query, limit=None, offset=None, storefront='us', types='songs'):
+    def search(self, query, limit=None, offset=None, storefront='us',
+               types=TRACK_TYPE_SONGS):
         """https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/Searchforresources.html#//apple_ref/doc/uid/TP40017625-CH58-SW1
         """
         if not query:
@@ -302,9 +303,7 @@ class AppleMusicClient(object):
     def user_playlist_update(self, id, name=None, description=None):
         """https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/UpdateLibraryPlaylistAttributes.html#//apple_ref/doc/uid/TP40017625-CH248-SW1
         """
-        payload = {
-            'attributes': {}
-        }
+        payload = {'attributes': {}}
         if name:
             payload['attributes']['name'] = name
         if description:
