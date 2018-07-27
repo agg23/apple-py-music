@@ -112,13 +112,13 @@ class AppleMusicClient(object):
         payload = payload or {}
         url = "%s%s%s" % (self.base_url, base_path, endpoint)
         request_method = self._request_method(method)
-        result = request_method(url,
-                                params=params,
-                                headers=self.headers,
-                                data=json.dumps(payload),
-                                timeout=self.timeout)
-        result.raise_for_status()
-        return result and result.json() or {}
+        response = request_method(url,
+                                  params=params,
+                                  headers=self.headers,
+                                  data=json.dumps(payload),
+                                  timeout=self.timeout)
+        response.raise_for_status()
+        return response.content and response.json() or {}
 
     """Helper Functions"""
 
