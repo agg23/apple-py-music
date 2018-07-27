@@ -148,6 +148,21 @@ class AppleMusicClient(object):
             params=params,
         )
 
+    def _build_track(self, track_id, track_type=TRACK_TYPE_SONGS):
+        """https://developer.apple.com/documentation/applemusicapi/libraryplaylistrequesttrack
+        """
+        return {
+            'id': str(track_id),
+            'type': TRACK_TYPE_SONGS,
+        }
+
+    def _build_tracks(self, track_ids, track_type=TRACK_TYPE_SONGS):
+        """
+        TODO: Offer the ability to add dynamic track types per track id
+        """
+        return map(lambda track_id: self._build_track(track_id, track_type),
+                   track_ids)
+
     """API Endpoints"""
 
     def search(self, query, limit=None, offset=None, storefront='us', types='songs'):
