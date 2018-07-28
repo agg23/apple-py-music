@@ -7,10 +7,10 @@ setup(
     install_requires=['cryptography', 'PyJWT', 'requests'],
     keywords="apple music api wrapper",
     license="MIT",
-    name="apple-music-py",
-    packages=["applemusicpy"],
+    name="apple-py-music",
+    packages=["applepymusic"],
     # TODO:
     # test_suite="tests",
-    url='https://github.com/rcrdclub/apple-music-py',
-    version='0.4.0',
+    url='https://github.com/rcrdclub/apple-py-music',
+    version='0.5.0',
 )

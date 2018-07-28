@@ -1,4 +1,4 @@
-# apple-music-py
+# apple-py-music
 
 Apple Music Python Client
 
@@ -11,7 +11,7 @@ https://developer.apple.com/documentation/applemusicapi
 ## Example Usage
 
 ```python
->>> from applemusicpy import AppleMusicClient
+>>> from applepymusic import AppleMusicClient
 
 >>> client = AppleMusicClient('YOUR TEAM ID',
                               'YOUR KEY ID',
