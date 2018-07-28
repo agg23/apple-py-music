@@ -372,12 +372,29 @@ class AppleMusicClient(object):
             params=params,
         )
 
-    def user_playlists(self, limit=None, include=None):
-        """https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/GetAllLibraryPlaylists.html#//apple_ref/doc/uid/TP40017625-CH216-SW1
+    def user_playlists(self, limit=None, offset=None, include=None):
+        """https://developer.apple.com/documentation/applemusicapi/get_all_library_playlists
+
+        Params:
+            `include` [string]
+                Additional relationships to include in the fetch.
+            `l` string
+                The localization to use, specified by a language tag. The
+                possible values are in the supportedLanguageTags array belonging
+                to the Storefront object specified by storefront. Otherwise, the
+                storefront’s defaultLanguageTag is used.
+            `limit` number
+                The limit on the number of objects, or number of objects in the
+                specified relationship, that are returned. The default value is
+                25 and the maximum value is 100.
+            `offset` string
+                The next page or group of objects to fetch.
         """
         params = {}
         if limit:
             params['limit'] = limit
+        if offset:
+            params['offset'] = offset
         if include:
             params['include'] = include
         return self._make_request(
