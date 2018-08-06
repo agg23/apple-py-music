@@ -303,19 +303,20 @@ class AppleMusicClient(object):
             payload=payload,
         )
 
-    def user_playlist_update(self, id, name=None, description=None):
-        """https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/UpdateLibraryPlaylistAttributes.html#//apple_ref/doc/uid/TP40017625-CH248-SW1
-        """
-        payload = {'attributes': {}}
-        if name:
-            payload['attributes']['name'] = name
-        if description:
-            payload['attributes']['description'] = description
-        return self._make_request(
-            method='PATCH',
-            endpoint="/me/library/playlists/%s" % id,
-            payload=payload,
-        )
+    # As of 2018-08-06 this endpoint is no longer documented and attempts to
+    # reach it return a `501`, which according to the error codes docs suggests
+    # "Endpoint is currently unavailable and reserved for future use."
+    # def user_playlist_update(self, id, name=None, description=None):
+    #     payload = {'attributes': {}}
+    #     if name:
+    #         payload['attributes']['name'] = name
+    #     if description:
+    #         payload['attributes']['description'] = description
+    #     return self._make_request(
+    #         method='PATCH',
+    #         endpoint="/me/library/playlists/%s" % id,
+    #         payload=payload,
+    #     )
 
     # As of 2018-07-27 this endpoint is no longer documented and attempts to
     # reach it return a `403`
@@ -361,7 +362,7 @@ class AppleMusicClient(object):
         )
 
     def user_playlist(self, id, include=None):
-        """https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/GetaSingleLibraryPlaylist.html#//apple_ref/doc/uid/TP40017625-CH212-SW1
+        """https://developer.apple.com/documentation/applemusicapi/get_a_library_playlist
         """
         params = {}
         if include:
@@ -404,7 +405,7 @@ class AppleMusicClient(object):
         )
 
     def user_heavy_rotation(self, limit=None, offset=None):
-        """https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/GetHeavilyRotated.html#//apple_ref/doc/uid/TP40017625-CH63-SW1
+        """https://developer.apple.com/documentation/applemusicapi/get_heavy_rotation_content
         """
         params = {}
         if limit:
@@ -418,7 +419,19 @@ class AppleMusicClient(object):
         )
 
     def user_recent_played(self, limit=None, offset=None):
-        """https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/GetRecentlyPlayed.html#//apple_ref/doc/uid/TP40017625-CH62-SW1
+        """https://developer.apple.com/documentation/applemusicapi/get_recently_played
+
+        As of 2018-08-06, it seems the limit per request is 10 songs. Requesting
+        any more will lead to a `400` response error.
+
+        The response contains a list of dictionaries describing the tracks
+        listened to.
+
+        As far as contextual data, the timestamp of when the listen occured
+        is not included, but a dictionary of `playParams` does offer some
+        information. Example:
+
+            u'playParams': {u'id': u'298992486', u'kind': u'album'}
         """
         params = {}
         if limit:
