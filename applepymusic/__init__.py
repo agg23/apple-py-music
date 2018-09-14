@@ -68,6 +68,28 @@ class AppleMusicClient(object):
         self.timeout = timeout
         self.headers = self._get_auth_headers()
 
+    def __init__(self, developer_token, user_access_token=None,
+                 base_url=BASE_URL, api_version=API_VERSION,
+                 timeout=TIMEOUT_SECONDS):
+        """
+        Params:
+            `developer_token` <str>
+            `user_access_token` <str>
+            `base_url` <str>
+            `api_version` <str>
+            `timeout` <int>
+        """
+        self.developer_token = developer_token
+        self.user_access_token = user_access_token
+        self.base_url = base_url
+        self.api_version = api_version
+        self.timeout = timeout
+
+        headers = {'Authorization': 'Bearer %s' % self.developer_token}
+        if self.user_access_token:
+            headers['Music-User-Token'] = self.user_access_token
+        self.headers = headers
+
     def _get_auth_headers(self):
         self.developer_token = self._generate_developer_token(self.team_id,
                                                               self.key_id,
