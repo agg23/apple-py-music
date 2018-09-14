@@ -23,6 +23,7 @@ import requests
 
 
 BASE_URL = 'https://api.music.apple.com'
+BASE_ITUNES_URL = 'https://play.itunes.apple.com'
 
 API_VERSION = 'v1'
 
@@ -85,7 +86,10 @@ class AppleMusicClient(object):
         self.api_version = api_version
         self.timeout = timeout
 
-        headers = {'Authorization': 'Bearer %s' % self.developer_token}
+        headers = {
+            'Authorization': 'Bearer %s' % self.developer_token,
+            'content-type': 'application/json',
+        }
         if self.user_access_token:
             headers['Music-User-Token'] = self.user_access_token
         self.headers = headers
@@ -126,13 +130,15 @@ class AppleMusicClient(object):
             'DELETE': requests.delete,
         }.get(method)
 
-    def _make_request(self, method, endpoint, base_path=None, params=None,
+    def _make_request(self, method, endpoint, base_url=None, base_path=None, params=None,
                       payload=None):
         if base_path is None:
             base_path = "/%s" % self.api_version
         params = params or {}
         payload = payload or {}
-        url = "%s%s%s" % (self.base_url, base_path, endpoint)
+        if not base_url:
+            base_url = self.base_url
+        url = "%s%s%s" % (base_url, base_path, endpoint)
         request_method = self._request_method(method)
         response = request_method(url,
                                   params=params,
@@ -288,6 +294,16 @@ class AppleMusicClient(object):
             method='GET',
             endpoint="/catalog/%s/genres" % storefront,
             params=params,
+        )
+
+    def get_play_song(self, track_id):
+        payload = {'isLibrary': True, 'universalLibraryId': track_id}
+        return self._make_request(
+            method='POST',
+            endpoint="/WebObjects/MZPlay.woa/wa/webPlayback",
+            base_url=BASE_ITUNES_URL,
+            base_path="",
+            payload=payload,
         )
 
     def user_playlist_create(self, name, description=None, track_ids=None,
