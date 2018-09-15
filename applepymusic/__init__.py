@@ -509,3 +509,17 @@ class AppleMusicClient(object):
             endpoint='/me/library/songs',
             params=params,
         )
+
+    def user_albums(self, limit=None, offset=None, include=None):
+        params = {}
+        if limit:
+            params['limit'] = limit
+        if offset:
+            params['offset'] = offset
+        if include:
+            params['include'] = include
+        return self._make_request(
+            method='GET',
+            endpoint='/me/library/albums',
+            params=params,
+        )
