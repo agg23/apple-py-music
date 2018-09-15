@@ -543,3 +543,14 @@ class AppleMusicClient(object):
             endpoint='/me/library/albums/' + id,
             params=params,
         )
+
+    def user_get_song(self, id, include=None):
+        params = {}
+        if include:
+            params['include'] = include
+
+        return self._make_request(
+            method='GET',
+            endpoint='/me/library/songs/' + id,
+            params=params,
+        )
